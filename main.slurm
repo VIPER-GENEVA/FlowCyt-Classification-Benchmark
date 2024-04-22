@@ -13,7 +13,7 @@ module load Anaconda3
 eval "$(conda shell.bash hook)"
 conda activate flowcyt
 ###################################
-export CUDA_VISIBLE_DEVICES=0,1 #number of GPU devices
+export CUDA_VISIBLE_DEVICES=0,1 # number of GPU devices
 
 nvidia-smi
 #### INDUCTIVE
