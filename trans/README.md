@@ -25,7 +25,7 @@ Please cite the FlowCyt paper if you find this useful:
 ```
 @inproceedings{flowcyt2024,
   title={FlowCyt: A Comparative Study of Deep Learning Approaches for Multi-Class Classification in Flow Cytometry},
-  author={Bini, Lorenzo and Mojarrad, Fatemeh Nassajian and Liarou, Margarita and Matthes, Thomas and Marchand-Maillet, Stéphane},
+  author={Bini, Lorenzo and Nassajian Mojarrad, Fatemeh and Liarou, Margarita and Matthes, Thomas and Marchand-Maillet, Stéphane},
   booktitle={Conference on Health, Inference, and Learning (CHIL)},
   year={2024}
 }
