@@ -25,7 +25,7 @@ python -u gaussian_main.py --max_num_epochs 100 --batch_size 1 --n_components 6 
 
 ```
 
-For example, this will train test and evaluate XGBoost and Random Forest models with 10 estimators on the benchmark dataset. Users are free to choose on which populations (total or sub) run the experiments, simply by modifying `INPUT_FOLDER` and `INPUT_GRAPH` inside the `gaussian_main.py`, `rf_main.py` and `xgb_main.py` scripts.
+For example, this will train test, and evaluate XGBoost and Random Forest models with 10 estimators on the benchmark dataset. Users are free to choose on which populations (total or sub) run the experiments, simply by modifying `INPUT_FOLDER` and `INPUT_GRAPH` inside the `gaussian_main.py`, `rf_main.py` and `xgb_main.py` scripts.
 
 To run a deep learning experiment either use (early_stopping is set to 50 by default):
 
