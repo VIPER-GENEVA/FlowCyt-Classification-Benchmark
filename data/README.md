@@ -47,3 +47,18 @@ To create the CSV data only for sub-population (${\text{O},\text{N},\text{G},\te
 ```python
 python sub_generation.py
 ````
+
+## Citation
+If you find this benchmark dataset useful in your research, please cite the following paper:
+
+```bash
+@inproceedings{flowcyt2024,
+  title={FlowCyt: A Comparative Study of Deep Learning Approaches for Multi-Class Classification in Flow Cytometry},
+  author={Bini, Lorenzo and Mojarrad, Fatemeh Nassajian and Liarou, Margarita and Matthes, Thomas and Marchand-Maillet, Stéphane},
+  booktitle={Conference on Health, Inference, and Learning (CHIL)},
+  year={2024}
+}
+```
+
+## Contact
+Please contact the authors with any questions or feedback about the benchmark. We are happy to receive suggestions for extensions and collaborations!
