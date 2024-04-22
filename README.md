@@ -12,7 +12,8 @@ The repository has the following structure:
 - **data/**
   - **README.md**: Please refer to this for data and graph generation.
   - **raw/**: Contains the original FCS files.
-  - **Data_original/**: Contains CSV data for each sample, saved as *Case_{i}.csv* with the six classes (A-population) of cells.
+  - **data_original/**: Contains CSV data for each sample, saved as *Case_{i}.csv* with the six classes (A-population) of cells.
+  - **data_original_sub/**: Contains CSV sub-population data for each sample, saved as *Case_{i}.csv* with the five classes (sub-population) of cells.
 
 - **inductive/**
   - **README.md**: Please refer to this for inductive learning experiments and model reproducibility.
