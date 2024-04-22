@@ -6,15 +6,14 @@ from sklearn.manifold import TSNE
 from matplotlib.lines import Line2D
 import torch
 
+INPUT_GRAPH = 'data/sub_graph.pt' # 'data/A_graph.pt'
 model = torch.load('trans/trans_gat.pt')
-masked_graphs = torch.load('data/sub_graph.pt')
-
+masked_graphs = torch.load(INPUT_GRAPH)
 data22 = masked_graphs[22] #Patient23, since PyG list start from zero.
+label_to_color_map = {0: "red", 1: "blue", 2: "green", 3: "black", 4: "yellow"} # 5: 'purple' if INPUT_GRAPH = 'data/A_graph.pt' since it has six classes
 
-label_to_color_map = {0: "red", 1: "blue", 2: "green", 3: "black", 4: "yellow"} #5: 'purple'
 def visualize22(h, color):
     t_sne_embeddings = TSNE(n_components=2, perplexity=220, method='barnes_hut').fit_transform(h.detach().cpu().numpy())
-
     plt.scatter(t_sne_embeddings[:, 0], t_sne_embeddings[:, 1], c=color.cpu().numpy().astype(int), s=4, edgecolors='black', linewidths=0.2)
 
     ind1 = np.where(color.cpu().numpy() == 0)
@@ -31,21 +30,18 @@ def visualize22(h, color):
     plt.savefig('tsne23_100dpi.jpg', dpi=100)  # Save the image as JPG
     plt.show()
 
-
 out22 = model(data22.x, data22.edge_index)
 visualize22(out22, color=data22.y.cpu())  # Move color tensor to CPU
 
-
 t_sne_embeddings = TSNE(n_components=2, perplexity=220, method='barnes_hut').fit_transform(out22.detach().cpu().numpy())
-num_classes = 5 #6
+num_classes = 5 # 6 if INPUT_GRAPH = 'data/A_graph.pt'
 fig = plt.figure(figsize=(12, 8), dpi=100)
 for class_id in range(num_classes):
     plt.scatter(t_sne_embeddings[data22.y.cpu() == class_id, 0], t_sne_embeddings[data22.y.cpu() == class_id, 1], s=4, color=label_to_color_map[class_id], edgecolors='black', linewidths=0.2)
 
-legend_labels = ['T Lymphocytes', 'B Lymphocytes', 'Monocytes', 'Mast Cells', 'Hematopoietic'] #'Others' # Replace with your desired labels
+legend_labels = ['T Lymphocytes', 'B Lymphocytes', 'Monocytes', 'Mast Cells', 'Hematopoietic'] #'Others' # Replace with desired labels
 legend_elements = [Line2D([0], [0], marker='o', color='w', label=label, markerfacecolor=label_to_color_map[class_id], markersize=5) for class_id, label in enumerate(legend_labels)]
 plt.legend(handles=legend_elements)
-
 plt.savefig('TRANS23.png', dpi=100)
 plt.show()
 
@@ -69,7 +65,6 @@ node_index=10
 attention_explanation = attention_explainer(data.x, data.edge_index, index=node_index)
 attention_explanation.visualize_graph("attention_graph_10.png", backend="graphviz")
 plt.imshow(plt.imread("attention_graph_10.png"))
-
 
 ################################### EXPLAINABILITY ###################################
 explainer = Explainer(
@@ -99,29 +94,18 @@ path = 'subgraph.pdf'
 explanation.visualize_graph(path)
 print(f"Subgraph visualization plot has been saved to '{path}'")
 
-
 ################################### DEGREES VISUALIZATION ##########################
-
 from torch_geometric.utils import degree
 import numpy as np
 import matplotlib.pyplot as plt
 
 # Get model's classifications
 out = model(data.x, data.edge_index)
-
-# Move the 'out' tensor from GPU to CPU
 out = out.cpu()
-
-# Move the 'data.y' tensor from GPU to CPU
 data.y = data.y.cpu()
-
-# Calculate the degree of each node
 degrees = degree(data.edge_index[0]).cpu().numpy()
-
-# Store accuracy scores and sample sizes
 accuracies = []
 sizes = []
-
 # Accuracy for degrees between 0 and 5
 for i in range(0, 6):
     mask = np.where(degrees == i)[0]
@@ -148,7 +132,5 @@ for i in range(0, 7):
     plt.text(i, accuracies[i]//2, sizes[i],
              ha='center', color='white')
 
-# Save the plot as "degree_accuracy.png" with dpi=100
 plt.savefig('degree_accuracy.png', dpi=100)
-
 #########################
