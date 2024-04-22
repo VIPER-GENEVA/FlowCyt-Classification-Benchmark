@@ -31,7 +31,7 @@ The repository has the following structure:
 
 - **requirements.txt**: Python package dependencies.
 
-- `visualization/viz.py`: Visualization script to reproduce the [t-SNE](https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf?fbcl) embedding, plot the feature importance, the degrees visualization and the attention explainer for `GAT` models.
+- `visualization/viz.py`: Visualization script to reproduce the [t-SNE](https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf?fbcl) embedding, plot the feature importance, the degrees visualization and the attention explainer for `trans_gat.pt` models.
 
 ## Dataset
 The dataset comprises 30 bone marrow samples with 14-dimensional flow cytometry measurements per cell, the relevant ones for reproducing the paper's experiment are the 12 selected in the corresponding code. Approximately 250,000 - 1,000,000 cells were measured per patient.
