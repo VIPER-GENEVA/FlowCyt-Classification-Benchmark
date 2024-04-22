@@ -33,8 +33,8 @@ np.random.seed(seed_value)
 torch.manual_seed(seed_value)
 torch.cuda.manual_seed_all(seed_value)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-INPUT_GRAPH = 'data/A_graph.pt' #data/sub_graph.pt  
-masked_graphs = torch.load(INPUT_GRAPH) #data/sub_graph.pt
+INPUT_GRAPH = 'data/sub_graph.pt' # data/A_graph.pt  
+masked_graphs = torch.load(INPUT_GRAPH) 
 
 # Check if a GPU is available
 if torch.cuda.is_available():
