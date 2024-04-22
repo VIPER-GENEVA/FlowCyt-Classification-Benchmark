@@ -10,7 +10,7 @@ The goal is to facilitate standardized assessment and development of automated s
 The repository has the following structure:
 
 - **data/**
-  - **README.md**: Please refer to this for data and graph generation.
+  - **README.md**: Please refer to this for more explanations on data and graph generation.
   - **raw/**: Contains the original FCS files.
   - **data_original/**: Contains CSV data for each sample, saved as *Case_{i}.csv* with the six classes (A-population) of cells.
   - **data_original_sub/**: Contains CSV sub-population data for each sample, saved as *Case_{i}.csv* with the five classes (sub-population) of cells.
