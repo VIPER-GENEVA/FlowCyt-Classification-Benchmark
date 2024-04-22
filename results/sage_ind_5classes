@@ -1,0 +1,19 @@
+Number of initial graphs in the list: 30
+
+-----------------------------------------
+Average Metrics Across All Patients:
+Average Precision: 0.97
+Average Recall: 0.98
+Average F1 Score: 0.98
+
+Average Ratios Across All Patients:
+Label O: 0.9818
+Label N: 0.8686
+Label G: 0.9371
+Label P: 0.9950
+Label K: 0.9525
+-----------------------------------------
+
+
+
+
