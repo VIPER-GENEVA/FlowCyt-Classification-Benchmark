@@ -1,6 +1,8 @@
 # FlowCyt Data
 
-This directory contains the dataset for the FlowCyt benchmark paper.
+This repository contains the benchmark dataset and code for the paper "FlowCyt: A Comparative Study of Deep Learning Approaches for Multi-Class Classification in Flow Cytometry" accepted at [CHIL@2024](https://chilconference.org/), [Track 2: Applications And Practice](https://chilconference.org/call-for-papers.html#tab-track-2) for benchmarking deep learning models in Medicine.
+
+FlowCyt is the first comprehensive benchmark for evaluating multi-class single-cell classification methods on flow cytometry data. It comprises a richly annotated dataset of bone marrow samples from 30 patients, with ground truth labels for 5 important hematological cell types.
 
 ## Contents
 
