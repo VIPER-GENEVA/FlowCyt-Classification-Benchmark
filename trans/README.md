@@ -16,7 +16,7 @@ python gnn_trans.py --model GCN --num_layers 1 --hidden_features 64 --dropout 0.
 python gnn_trans.py --model SAGE --num_layers 1 --hidden_features 64 --dropout 0.3 --input_dim 12 --output_dim 5 --max_num_epochs 1000 --start_lr 0.01 
 ```
 
-By configuration's experiment, `input_dim` is always set to 12, and `ouput_dim` is set to 5, since the transductive framework in the paper has been mainly applied to the sub-population files. However, if researchers are interested can modify set `output_dim` as 6 in the above one, to run experiments on the total populations (they also would need to modify INPUT_GRAPH inside the `gnn_trans.py`).
+By configuration's experiment, `input_dim` is always set to 12, and `ouput_dim` is set to 5, since the transductive framework in the paper has been mainly applied to the sub-population files. However, if researchers are interested can modify set `output_dim` as 6 in the above one, to run experiments on the total populations (they also would need to modify `INPUT_GRAPH` inside the `gnn_trans.py`).
 
 ## Citation 
 
