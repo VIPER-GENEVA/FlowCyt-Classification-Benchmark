@@ -1,28 +1,24 @@
 #!/bin/sh
-#SBATCH --job-name flowcyt         # this is a parameter to help you sort your job when listing it
+#SBATCH --job-name flowcyt         
 #SBATCH --error run.e%j     # optional. By default a file slurm-{jobid}.out will be created
 #SBATCH --output run.o%j      # optional. By default the error and output files are merged
-#SBATCH --ntasks 1                    # number of tasks in your job. One by default
-#SBATCH --cpus-per-task 4             # number of cpus for each task. One by default 
-#SBATCH --mem 32GB                   #####CPU is mutually exclusive with the one for GPUs.#sbatch --mem-per-cpu=16000 # in MB
-#SBATCH --partition debug-gpu         # the partition to use. By default debug-cpu. (shared-gpu)
-#SBATCH --gres=gpu:1 #,VramPerGpu:30G
-#SBATCH --time 0-00:14:59                  # maximum run time.
-# module load my sosftware               # load a specific software using module, for example Python
+#SBATCH --ntasks 1                    
+#SBATCH --cpus-per-task 4            
+#SBATCH --mem 32GB                   
+#SBATCH --partition debug-gpu         
+#SBATCH --gres=gpu:1 #,VramPerGpu:15G
+#SBATCH --time 0-00:14:59                  
 
-## USATO Python 3.8.18
 module load Anaconda3
 eval "$(conda shell.bash hook)"
-conda activate test_gpu
+conda activate flowcyt
 ###################################
-export CUDA_VISIBLE_DEVICES=0,1
+export CUDA_VISIBLE_DEVICES=0,1 #number of GPU devices
 
-#srun --tasks=1 --time-min=00:10:00 --time=0-11:59:59 --partition private-cui-gpu cnn_mrd.py
 nvidia-smi
-
 #### INDUCTIVE
-#python -u -m inductive.gnn_main --model GAT --num_layers 1 --hidden_features 16 --dropout 0.2 --in_heads 4 --out_heads 4 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01 --num_repetitions 10
-python -u -m inductive.dnn_main --num_layers 5 --hidden_dim 256 --input_dim 12 --output_dim 6 --dropout 0.3 --max_num_epochs 300 --batch_size 1 --start_lr 0.01 --num_repetitions 10
+python -u -m inductive.gnn_main --model GAT --num_layers 1 --hidden_features 16 --dropout 0.2 --in_heads 4 --out_heads 4 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01 --num_repetitions 10
+#python -u -m inductive.dnn_main --num_layers 5 --hidden_dim 256 --input_dim 12 --output_dim 6 --dropout 0.3 --max_num_epochs 300 --batch_size 1 --start_lr 0.01 --num_repetitions 10
 #python -u -m inductive.gaussian_main --max_num_epochs 100 --batch_size 1 --n_components 6 --max_iter 1000 --num_repetitions 4   
 #python -u -m inductive.rf_main --max_num_epochs 100 --batch_size 1 --num_repetitions 5 --n_estimators 10 --max_depth 3
 #python -u -m inductive.xgb_main --max_num_epochs 100 --batch_size 1 --num_repetitions 5 --n_estimators 10 --max_depth 3 --learning_rate 0.01
