@@ -73,17 +73,17 @@ The following steps demonstrate how to run a GNN experiment:
 
 1. Run one of these GNN models under the Inductive Learning framework:
 ```bash
-python inductive/gnn_main.py --model GAT --num_layers 1 --hidden_features 16 --dropout 0.3 --in_heads 4 --out_heads 4 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01 --num_repetitions 10
-python inductive/gnn_main.py --model GCN --num_layers 1 --hidden_features 64 --dropout 0.3 --input_dim 12 --output_dim 6 --max_num_epochs 100 --start_lr 0.01 --num_repetitions 10
-python inductive/gnn_main.py --model SAGE --num_layers 1 --hidden_features 64 --dropout 0.3 --input_dim 12 --output_dim 6 --max_num_epochs 100 --start_lr 0.01 --num_repetitions 10
+#python -u -m inductive.gnn_main --model GAT --num_layers 1 --hidden_features 16 --dropout 0.2 --in_heads 4 --out_heads 4 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01 --num_repetitions 10
+#python -u -m inductive.gnn_main --model GCN --num_layers 1 --hidden_features 16 --dropout 0.3 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01 --num_repetitions 10
+#python -u -m inductive.gnn_main --model SAGE --num_layers 1 --hidden_features 16 --dropout 0.3 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01 --num_repetitions 10
 ```
 This will train and evaluate a Graph Neural Network model using the default parameters. See `inductive/` for other available models.
 
 2. Evaluate one of these GNN models under the Transductive Learning framework:
 ```bash
-python trans/gnn_trans.py --model GAT --num_layers 1 --hidden_features 64 --dropout 0.3 --in_heads 2 --out_heads 2 --input_dim 12 --output_dim 5 --max_num_epochs 1000 --start_lr 0.01
-python trans/gnn_trans.py --model GCN --num_layers 1 --hidden_features 64 --dropout 0.3 --input_dim 12 --output_dim 5 --max_num_epochs 1000 --start_lr 0.01 
-python trans/gnn_trans.py --model SAGE --num_layers 1 --hidden_features 64 --dropout 0.3 --input_dim 12 --output_dim 5 --max_num_epochs 1000 --start_lr 0.01 
+python -u -m trans.gnn_trans --model GAT --num_layers 1 --hidden_features 64 --dropout 0.2 --in_heads 2 --out_heads 2 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01
+python -u -m trans.gnn_trans --model GCN --num_layers 1 --hidden_features 64 --dropout 0.3 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01
+python -u -m trans.gnn_trans --model SAGE --num_layers 1 --hidden_features 64 --dropout 0.3 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01
 ```
 
 The script will print out performance metrics and also save predictions under `results/`. See `trans/` for details on specifying model hyperparameters and experiment configurations.
