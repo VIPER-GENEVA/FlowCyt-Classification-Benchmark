@@ -64,7 +64,7 @@ conda activate flowcyt
 Otherwise you may clone our repository:
 
 ```bash
-git clone https://github.com/anonymized/FlowCyt-Classification-Benchmark.git
+git clone https://github.com/VIPER-GENEVA/FlowCyt-Classification-Benchmark.git
 cd FlowCyt-Classification-Benchmark
 ```
 
