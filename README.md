@@ -73,9 +73,9 @@ The following steps demonstrate how to run a GNN experiment:
 
 1. Run one of these GNN models under the Inductive Learning framework:
 ```bash
-#python -u -m inductive.gnn_main --model GAT --num_layers 1 --hidden_features 16 --dropout 0.2 --in_heads 4 --out_heads 4 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01 --num_repetitions 10
-#python -u -m inductive.gnn_main --model GCN --num_layers 1 --hidden_features 16 --dropout 0.3 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01 --num_repetitions 10
-#python -u -m inductive.gnn_main --model SAGE --num_layers 1 --hidden_features 16 --dropout 0.3 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01 --num_repetitions 10
+python -u -m inductive.gnn_main --model GAT --num_layers 1 --hidden_features 16 --dropout 0.2 --in_heads 4 --out_heads 4 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01 --num_repetitions 10
+python -u -m inductive.gnn_main --model GCN --num_layers 1 --hidden_features 16 --dropout 0.3 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01 --num_repetitions 10
+python -u -m inductive.gnn_main --model SAGE --num_layers 1 --hidden_features 16 --dropout 0.3 --input_dim 12 --output_dim 6 --max_num_epochs 1000 --start_lr 0.01 --num_repetitions 10
 ```
 This will train and evaluate a Graph Neural Network model using the default parameters. See `inductive/` for other available models.
 
