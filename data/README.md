@@ -31,7 +31,7 @@ This CSV file contains the sub cell population (sub-population) for each patient
 
 ## Quick start with the graph lists
 For a quick start, we include the two normalized graph lists to be used for `inductive/` and `transductive/` experiments, each of them created by kNN with $k=7$, both for A-populations `A_graph.pt` and sub-populations `sub_graph.pt`of cells per each patient.
-To reproduce the graphs:
+To reproduce the graphs, run all the following command lines from the main project directory:
 ```python
 python -u -m data.graph_generation --in_dir data/data_original --out_dir data/A_graph.pt
 python -u -m data.graph_generation --in_dir data/data_original_sub --out_dir data/sub_graph.pt
@@ -40,12 +40,12 @@ python -u -m data.graph_generation --in_dir data/data_original_sub --out_dir dat
 ## Usage 
 To recreate the CSV data for total population and save them as  `data_original/`:
 ```python
-python A_generation.py
+python -u -m data.A_generation.py
 ````
 
 To create the CSV data only for sub-population (${\text{O},\text{N},\text{G},\text{P},\text{K}}$) and save them as  `data_original_sub/`:
 ```python
-python sub_generation.py
+python -u -m data.sub_generation.py
 ````
 
 ## Citation
