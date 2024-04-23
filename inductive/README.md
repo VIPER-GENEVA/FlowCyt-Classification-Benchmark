@@ -15,7 +15,7 @@ The following supervised learning models are implemented under `models/`:
 - `gaussian_main.py`: Gaussian Mixture Model
 
 ## Experiments
-
+To reproduce the paper's experiments please run all the following command lines from the main project directory.
 To run a machine learning experiment, use:
 
 ```bash
