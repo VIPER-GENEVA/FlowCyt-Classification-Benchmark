@@ -69,6 +69,8 @@ cd FlowCyt-Classification-Benchmark
 ```
 
 ## Quick Start
+To reproduce paper's experiment, please run all the following command lines from this main project directory.
+
 The following steps demonstrate how to run a GNN experiment:
 
 1. Run one of these GNN models under the Inductive Learning framework:
