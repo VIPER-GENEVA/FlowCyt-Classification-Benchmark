@@ -31,3 +31,4 @@ Please cite the FlowCyt paper if you find this useful:
   year={2024}
 }
 ```
+Don't hesitate to contact the authors to discuss any further ideas or collaboration!
