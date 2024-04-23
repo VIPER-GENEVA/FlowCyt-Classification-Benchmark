@@ -9,6 +9,7 @@ To achieve this, we randomly assigned 10\% of the nodes for validation and 10\% 
 To highlight the strength of graph models, the figure below shows the [t-SNE](https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf?fbcl) embedding visualization of GAT for one random patient (patient 23 has been randomly picked). Despite the difficulties due to the mask setup typical of transductive learning, we can see how the graph model has clustered the five classes into its final embedding layer. ![embedding](TRANS23.png) 
 
 ## Usage
+To reproduce paper's experiments please run all the following command lines from the main project directory.
 
 ```python
 python -u -m trans.gnn_trans --model GAT --num_layers 1 --hidden_features 64 --dropout 0.2 --in_heads 2 --out_heads 2 --input_dim 12 --output_dim 5 --max_num_epochs 1000 --start_lr 0.01
