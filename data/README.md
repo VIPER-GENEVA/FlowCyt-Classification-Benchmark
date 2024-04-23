@@ -61,4 +61,4 @@ If you find this benchmark dataset useful in your research, please cite the foll
 ```
 
 ## Contact
-Please contact the authors with any questions or feedback about the benchmark. We are happy to receive suggestions for extensions and collaborations!
+Please get in touch with the authors with any questions or feedback about the benchmark. We are happy to receive suggestions for extensions and collaborations!
