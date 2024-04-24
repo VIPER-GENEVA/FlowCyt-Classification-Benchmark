@@ -16,6 +16,7 @@ from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_
 import random
 import torch.nn as nn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
+import os
 
 # Set seeds for reproducibility
 torch.cuda.empty_cache()
@@ -201,7 +202,12 @@ if __name__ == "__main__":
 # Initialize a list to store the ratios for each label across all patients
 average_ratio_per_label = []
 percentage_corrected_labels = []
-for key in patient_dict.keys():
+results_dir = "res_ind_dnn"
+if not os.path.exists(results_dir):
+    os.makedirs(results_dir)
+results_file = os.path.join(results_dir, "res_ind_dnn.txt")
+with open(results_file, "w") as f:
+    for key in patient_dict.keys():
         idx = patient_dict[key]['f1'].index(max(patient_dict[key]['f1']))
 
         # Compute metrics for each patient
@@ -211,41 +217,41 @@ for key in patient_dict.keys():
         accuracy = accuracy_score(patient_dict[key]['label'][idx], patient_dict[key]['pred'][idx])
         f1 = f1_score(patient_dict[key]['label'][idx], patient_dict[key]['pred'][idx], average='weighted', zero_division=1)
 
-        print(f"Metrics for Patient {key}:")
-        print(f"Confusion Matrix:\n{conf_matrix}")
-        print(f"Precision: {precision:.4f}")
-        print(f"Recall: {recall:.4f}")
-        print(f"Accuracy: {accuracy:.4f}")
-        print(f"F1 Score: {f1:.4f}")
+        f.write(f"Metrics for Patient {key}:\n")
+        f.write(f"Confusion Matrix:\n{conf_matrix}\n")
+        f.write(f"Precision: {precision:.4f}\n")
+        f.write(f"Recall: {recall:.4f}\n")
+        f.write(f"Accuracy: {accuracy:.4f}\n")
+        f.write(f"F1 Score: {f1:.4f}\n")
 
         average_precision = np.mean([precision_score(patient_dict[key]['label'][idx], patient_dict[key]['pred'][idx], average='weighted', zero_division=1) for key in patient_dict.keys()])
         average_recall = np.mean([recall_score(patient_dict[key]['label'][idx], patient_dict[key]['pred'][idx], average='weighted', zero_division=1) for key in patient_dict.keys()])
         average_f1 = np.mean([f1_score(patient_dict[key]['label'][idx], patient_dict[key]['pred'][idx], average='weighted', zero_division=1) for key in patient_dict.keys()])
 
-        print("\nAverage Metrics Across All Patients:")
-        print(f"Average Precision: {average_precision:.4f}")
-        print(f"Average Recall: {average_recall:.4f}")
-        print(f"Average F1 Score: {average_f1:.4f}")
+        f.write("\nAverage Metrics Across All Patients:\n")
+        f.write(f"Average Precision: {average_precision:.4f}\n")
+        f.write(f"Average Recall: {average_recall:.4f}\n")
+        f.write(f"Average F1 Score: {average_f1:.4f}\n")
 
         total_right_cells = np.sum(np.diag(conf_matrix))
         ratio_per_label = np.diag(conf_matrix) / np.sum(conf_matrix, axis=1)
 
         for i, label in enumerate(range(conf_matrix.shape[0])):
-            print(f"Label {label}:")
-            print(f"Ratio of Correct Predictions: {ratio_per_label[i]:.4f}")
+            f.write(f"Label {label}:\n")
+            f.write(f"Ratio of Correct Predictions: {ratio_per_label[i]:.4f}\n")
 
             if len(average_ratio_per_label) <= i:
                 average_ratio_per_label.append([ratio_per_label[i]])
             else:
                 average_ratio_per_label[i].append(ratio_per_label[i])
 
-        print("-" * 50)
+        f.write("-" * 50 + "\n")
 
         percentage_corrected = np.diag(conf_matrix) / np.sum(conf_matrix, axis=0)
         percentage_corrected_labels.append(percentage_corrected)
 average_ratio_per_label = np.mean(average_ratio_per_label, axis=1)
 
-print("\nAverage Ratios Across All Patients:")
+f.write("\nAverage Ratios Across All Patients:\n")
 label_dict = {0: 'O', 1: 'N', 2: 'G', 3: 'P', 4: 'K', 5: 'B'}
 for i, average_ratio in enumerate(average_ratio_per_label):
-    print(f"Label {label_dict[i]}: {average_ratio:.4f}")
+    f.write(f"Label {label_dict[i]}: {average_ratio:.4f}\n")
