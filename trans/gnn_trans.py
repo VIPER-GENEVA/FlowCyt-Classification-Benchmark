@@ -9,6 +9,7 @@ import torch.nn as nn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from utils.weights import get_class_weights_tensor
 import sys
+import os
 
 # Define parser
 parser = argparse.ArgumentParser(description='GNN Benchmark Script')
@@ -33,8 +34,8 @@ np.random.seed(seed_value)
 torch.manual_seed(seed_value)
 torch.cuda.manual_seed_all(seed_value)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-INPUT_GRAPH = 'data/sub_graph.pt' # data/A_graph.pt  
-masked_graphs = torch.load(INPUT_GRAPH) 
+INPUT_GRAPH = 'data/A_graph.pt' #data/sub_graph.pt  
+masked_graphs = torch.load(INPUT_GRAPH) #data/sub_graph.pt
 
 # Check if a GPU is available
 if torch.cuda.is_available():
@@ -140,50 +141,57 @@ to create the full_mask. The full_mask will only have True values for the nodes
 that are both in the train_mask and the rand_mask, effectively masking 50% of the nodes in the train_mask.
 Same for val_mask and test_mask.
 '''
-for epoch in range(1, args.max_num_epochs + 1):
-    
-    torch.cuda.empty_cache()
-    model.train()
-    total_loss = 0
-    for graph in masked_graphs:
+class ClearCache:
+    def __enter__(self):
+        torch.cuda.empty_cache()
 
-        # Combine existing mask with new random mask for masking 50% of nodes
-        full_mask = graph.train_mask & graph.rand_mask
-        data = graph.to(device)
-        optimizer.zero_grad()
-        out = model(data)
-        current_weights = class_weights_tensor[masked_graphs.index(graph)]
-        criterion = nn.NLLLoss(weight=current_weights)
-        loss = criterion(out[full_mask], data.y[full_mask])
-        loss.backward()
-        optimizer.step()
-        total_loss += loss.item()
+    def __exit__(self, exc_type, exc_value, traceback):
+        torch.cuda.empty_cache()
 
-    average_train_loss = total_loss / len(masked_graphs)
-    model.eval()
-    val_loss = 0
-    for graph in masked_graphs:
-        # Combine existing mask with new random mask for masking 50% of nodes
-        full_mask = graph.val_mask & graph.rand_mask
-        data = graph.to(device)
-        with torch.no_grad():
-            out = model(data)
-        current_weights = class_weights_tensor[masked_graphs.index(graph)]
-        criterion = nn.NLLLoss(weight=current_weights)
-        loss = criterion(out[full_mask], data.y[full_mask])
-        val_loss += loss.item()
+with ClearCache():
+    for epoch in range(1, args.max_num_epochs + 1):
+        model.train()
+        total_loss = 0
+        for graph in masked_graphs:
+            with ClearCache():
+                # Combine existing mask with new random mask for masking 50% of nodes
+                full_mask = graph.train_mask & graph.rand_mask
+                data = graph.to(device)
+                optimizer.zero_grad()
+                out = model(data)
+                current_weights = class_weights_tensor[masked_graphs.index(graph)]
+                criterion = nn.NLLLoss(weight=current_weights)
+                loss = criterion(out[full_mask], data.y[full_mask])
+                loss.backward()
+                optimizer.step()
+                total_loss += loss.item()
 
-    average_val_loss = val_loss / len(masked_graphs)
-    print(f'Epoch: {epoch}, Training Loss: {average_train_loss:.4f}, Validation Loss: {average_val_loss:.4f}')
-    scheduler.step(average_val_loss)
-    if average_val_loss < best_val_loss:
-        best_val_loss = average_val_loss
-        counter = 0
-    else:
-        counter += 1
-        if counter >= patience:
-            print(f'Early stopping after {epoch} epochs.')
-            break
+        average_train_loss = total_loss / len(masked_graphs)
+        model.eval()
+        val_loss = 0
+        for graph in masked_graphs:
+            with ClearCache():
+                # Combine existing mask with new random mask for masking 50% of nodes
+                full_mask = graph.val_mask & graph.rand_mask
+                data = graph.to(device)
+                with torch.no_grad():
+                    out = model(data)
+                current_weights = class_weights_tensor[masked_graphs.index(graph)]
+                criterion = nn.NLLLoss(weight=current_weights)
+                loss = criterion(out[full_mask], data.y[full_mask])
+                val_loss += loss.item()
+
+        average_val_loss = val_loss / len(masked_graphs)
+        print(f'Epoch: {epoch}, Training Loss: {average_train_loss:.4f}, Validation Loss: {average_val_loss:.4f}')
+        scheduler.step(average_val_loss)
+        if average_val_loss < best_val_loss:
+            best_val_loss = average_val_loss
+            counter = 0
+        else:
+            counter += 1
+            if counter >= patience:
+                print(f'Early stopping after {epoch} epochs.')
+                break
 
 print('Training and validation completed.')
 
@@ -192,9 +200,11 @@ precision_scores = []
 recall_scores = []
 f1_scores = []
 model.eval()
+
 for graph in masked_graphs:
     full_mask = graph.test_mask & graph.rand_mask
     data = graph.to(device)
+    torch.cuda.empty_cache()
     with torch.no_grad():
         out = model(data)
     
@@ -211,21 +221,26 @@ for graph in masked_graphs:
     recall_scores.append(recall)
     f1_scores.append(f1)
 
-for i in range(len(masked_graphs)):
-    print(f'Graph {i+1}:')
-    print(f'Accuracy: {accuracy_scores[i]:.4f}')
-    print(f'Precision: {precision_scores[i]:.4f}')
-    print(f'Recall: {recall_scores[i]:.4f}')
-    print(f'F1 Score: {f1_scores[i]:.4f}')
-    print()
+results_dir = "res_trans_gnn"
+if not os.path.exists(results_dir):
+    os.makedirs(results_dir)
+results_file = os.path.join(results_dir, "res_trans_gnn.txt")
+with open(results_file, "w") as f:
+    for i in range(len(masked_graphs)):
+        f.write(f'Graph {i+1}:\n')
+        f.write(f'Accuracy: {accuracy_scores[i]:.4f}\n')
+        f.write(f'Precision: {precision_scores[i]:.4f}\n')
+        f.write(f'Recall: {recall_scores[i]:.4f}\n')
+        f.write(f'F1 Score: {f1_scores[i]:.4f}\n')
+        f.write('\n')
 
-print('Testing completed.')
-average_accuracy = sum(accuracy_scores) / len(accuracy_scores)
-average_precision = sum(precision_scores) / len(precision_scores)
-average_recall = sum(recall_scores) / len(recall_scores)
-average_f1 = sum(f1_scores) / len(f1_scores)
+    f.write('Testing completed.\n')
+    average_accuracy = sum(accuracy_scores) / len(accuracy_scores)
+    average_precision = sum(precision_scores) / len(precision_scores)
+    average_recall = sum(recall_scores) / len(recall_scores)
+    average_f1 = sum(f1_scores) / len(f1_scores)
 
-print(f'Average Accuracy: {average_accuracy:.4f}')
-print(f'Average Precision: {average_precision:.4f}')
-print(f'Average Recall: {average_recall:.4f}')
-print(f'Average F1 Score: {average_f1:.4f}')
+    f.write(f'Average Accuracy: {average_accuracy:.4f}\n')
+    f.write(f'Average Precision: {average_precision:.4f}\n')
+    f.write(f'Average Recall: {average_recall:.4f}\n')
+    f.write(f'Average F1 Score: {average_f1:.4f}\n')
