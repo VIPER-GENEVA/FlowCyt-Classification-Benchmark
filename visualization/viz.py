@@ -81,7 +81,7 @@ explainer = Explainer(
 )
 
 data = masked_graphs[22]
-node_index = 79142
+node_index = 79142 # Select the node index on your choice
 explanation = explainer(data.x, data.edge_index, index=node_index) 
 
 print(f'Generated explanations in {explanation.available_explanations}')
