@@ -5,6 +5,9 @@ import numpy as np
 from sklearn.manifold import TSNE
 from matplotlib.lines import Line2D
 import torch
+from sklearn.metrics import accuracy_score
+from torch_geometric.explain import Explainer
+from torch_geometric.explain import GNNExplainer, AttentionExplainer
 
 INPUT_GRAPH = 'data/sub_graph.pt' # 'data/A_graph.pt'
 model = torch.load('trans/trans_gat.pt')
