@@ -62,7 +62,7 @@ Alternatively, you can install our `enviroment.yaml` file:
 conda env create -f environment.yaml
 conda activate flowcyt
 ```
-Otherwise you may clone our repository:
+You may clone our repository:
 
 ```bash
 git clone https://github.com/VIPER-GENEVA/FlowCyt-Classification-Benchmark.git
