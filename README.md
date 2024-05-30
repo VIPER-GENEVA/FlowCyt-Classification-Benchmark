@@ -57,7 +57,7 @@ Installing via requirements:
 ```bash
 pip install -r requirements.txt
 ````
-Alternatively, you can install our `enviroment.yaml` file:
+Alternatively, you can install our `environment.yaml` file:
 ```bash
 conda env create -f environment.yaml
 conda activate flowcyt
