@@ -70,7 +70,7 @@ cd FlowCyt-Classification-Benchmark
 ```
 
 ## Quick Start
-To reproduce paper's experiment, please run all the following command lines from this main project directory.
+To reproduce paper's experiment, please run all the following command lines from this main project directory. We rely on Slurm job scheduling system.
 
 The following steps demonstrate how to run a GNN experiment:
 
