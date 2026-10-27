@@ -1,7 +1,7 @@
 # FlowCyt: A Comparative Study of Deep Learning Approaches for Multi-Class Classification in Flow Cytometry Benchmarking
 
-This repository contains the benchmark dataset and code for the paper "[FlowCyt: A Comparative Study of Deep Learning Approaches for Multi-Class Classification in Flow Cytometry](https://proceedings.mlr.press/v248/bini24a.html)" accepted at [CHIL@2024](https://chil.ahli.cc/), [Track 2: Applications And Practice](https://chil.ahli.cc/submit/call-for-papers/) 
-for benchmarking deep learning models in Medicine. Check out our latest works on the [VIPER Webpage](https://viper-geneva.github.io/)!
+This repository contains the benchmark dataset and code for the paper "[FlowCyt: A Comparative Study of Deep Learning Approaches for Multi-Class Classification in Flow Cytometry](https://proceedings.mlr.press/v248/bini24a.html)" accepted at [CHIL@2024 New York, USA](https://chil.ahli.cc/), [Track 2: Applications And Practice](https://chil.ahli.cc/submit/call-for-papers/) 
+for benchmarking deep learning models in Medicine. Check out our latest works on the [VIPER Webpage](https://viper-geneva.github.io/), and directly download all the datasets from [our cloud](https://cuicloud.unige.ch/index.php/s/55PHBLEynrp5pN8)!
 
 FlowCyt is the first comprehensive benchmark for evaluating multi-class single-cell classification methods on flow cytometry data. It comprises a richly annotated dataset of bone marrow samples from 30 patients, with ground truth labels for 5 important hematological cell types.
 
